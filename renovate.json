@@ -1,11 +1,12 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json"
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base"],
   "hostRules": [
     {
       "hostType": "azure",
       "matchHost": "https://trimbletransportationcloud.azurecr.io",
-      "username": "{{ env.OCI_REGISTRY_USERNAME }}",
-      "password": "{{ env.OCI_REGISTRY_PASSWORD }}"
+      "username": "{{ secrets.ACR_USERNAME }}",
+      "password": "{{ secrets.ACR_PASSWORD }}"
     }
   ],
   "packageRules": [
