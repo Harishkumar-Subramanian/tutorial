@@ -5,8 +5,8 @@
     {
       "hostType": "azure",
       "matchHost": "https://trimbletransportationcloud.azurecr.io",
-      "username": "{{ secrets.ACR_USERNAME }}",
-      "password": "{{ secrets.ACR_PASSWORD }}"
+      "username": "{{ secrets.OCI_REGISTRY_USERNAME }}",
+      "password": "{{ secrets.OCI_REGISTRY_PASSWORD }}"
     }
   ],
   "packageRules": [
