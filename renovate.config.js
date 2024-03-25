@@ -22,5 +22,5 @@ module.exports = {
        datasourceTemplate: 'helm',
       }
   ],
-  repositories: ['tutorial'],
+  repositories: ['Harishkumar-Subramanian/tutorial'],
 };
