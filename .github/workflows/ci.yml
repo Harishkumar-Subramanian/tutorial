@@ -18,6 +18,12 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '16'
+      - name: Replace secrets in Renovate configuration
+        run: |
+          OCI_REGISTRY_USERNAME=${{ secrets.OCI_REGISTRY_USERNAME }}
+          OCI_REGISTRY_PASSWORD=${{ secrets.OCI_REGISTRY_PASSWORD }}
+          sed -i "s/{{ secrets.OCI_REGISTRY_USERNAME }}/$OCI_REGISTRY_USERNAME/g" renovate.json
+          sed -i "s/{{ secrets.OCI_REGISTRY_PASSWORD }}/$OCI_REGISTRY_PASSWORD/g" renovate.json
       - name: Run Renovate
         uses: renovatebot/github-action@v40.1.6
         with:
