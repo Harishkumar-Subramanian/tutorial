@@ -2,7 +2,7 @@ module.exports = {
   hostRules: [
     {
       hostType: 'docker',
-      baseUrl: 'https://myregistry.azurecr.io',
+      baseUrl: 'https://trimbletransportationcloud.azurecr.io',
       username: process.env.OCI_REGISTRY_USERNAME,
       password: process.env.OCI_REGISTRY_PASSWORD,
     },
@@ -10,7 +10,7 @@ module.exports = {
   packageRules: [
     {
       datasources: ['helm'],
-      registryUrls: ['oci://myregistry.azurecr.io'],
+      registryUrls: ['oci://trimbletransportationcloud.azurecr.io'],
       packageNames: ['my-helm-chart'],
       enabled: true,
     },
