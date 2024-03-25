@@ -1,0 +1,134 @@
+cluster:
+  name: dev
+  namespace: devopssample
+helm:
+  targetRevision: 2.9.10
+global:
+  appName: tcx-devopssample
+  teamName: tcx-slipway
+  env: dev
+  namespace: devopssample
+deployment:
+  initContainers:
+    - name: ta-kafka-processor-liquibase
+      image:
+        repo: >-
+          trimbletransportationcloud.azurecr.io/tcx/ttc-te-partnerportal/ta-kafka-processor-liquibase
+        tag: dbbc44f1b8c1ebb2485eb6b2e4cd79a55b7413ca
+      command:
+        - /liquibase/invokeLiquibase.sh
+      envVars:
+        - name: HOST_URI
+          value: ttc-partner-portal-dev.postgres.database.azure.com:5432
+        - name: DATABASE
+          value: ta_kafka_processor
+      resources:
+        requests:
+          memory: 144Mi
+          cpu: 50m
+        limits:
+          memory: 176Mi
+          cpu: 75m
+    - name: ta-kafka-processor-liquibase1
+      image:
+        repo: >-
+          trimbletransportationcloud.azurecr.io/tcx/ttc-te-partnerportal/ta-kafka-processor-liquibase
+        tag: dbbc44f1b8c1ebb2485eb6b2e4cd79a55b7413ca
+      command:
+        - /liquibase/invokeLiquibase.sh
+      envVars:
+        - name: HOST_URI
+          value: ttc-partner-portal-dev.postgres.database.azure.com:5432
+        - name: DATABASE
+          value: ta_kafka_processor
+      resources:
+        requests:
+          memory: 144Mi
+          cpu: 50m
+        limits:
+          memory: 176Mi
+          cpu: 75m
+  enabled: true
+  image:
+    repo: trimbletransportationcloud.azurecr.io/tcx/devopssample
+    tag: 946e5f4f7159c52ec527580b508894b9df5bb570
+  replicas: 1
+  progressDeadlineSeconds: 600
+  resources:
+    requests:
+      memory: 512Mi
+      cpu: 250m
+    limits:
+      cpu: 500m
+  ports:
+    - name: http
+      containerPort: 80
+  readinessProbe:
+    enabled: false
+  livenessProbe:
+    enabled: false
+  envVars:
+    - name: REGION
+  volumeMounts:
+    - mountPath: /project
+      name: tcxautomationreports
+  volumes:
+    - name: tcxautomationreports
+      azureBlob:
+        secretName: tcx-devopssample-secrets
+        containerName: test-container
+        readOnly: false
+service:
+  enabled: false
+hpa:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 50
+destinationRule:
+  enabled: false
+virtualService:
+  apiCloudIngress:
+    enabled: false
+    apiGatewayHost: api.dev.slipway.transportation.trimble.com
+    gateway: istio-system/api-cloud-gateway
+keyvault:
+  enabled: true
+  provider: azure
+  useVMManagedIdentity: 'true'
+  userAssignedIdentityID: 47ae0459-4636-48ab-aa9c-978653c63878
+  keyvaultName: ttc-dev-ad154ea61f23
+  resourceGroup: ttc-keyvaults-lower
+  subscriptionId: 6de0f912-f69f-48f5-9ef8-9c4b460ca91a
+  tenantId: 2f16a741-bc3a-42ec-831e-fda5267388cf
+  argoSyncWave: -1
+  secrets:
+    - objectName: azureStorageAccountName
+      objectType: secret
+    - objectName: azureStorageAccountKey
+      objectType: secret
+  secretObjects:
+    - data:
+        - key: azureStorageAccountKey
+          objectName: azureStorageAccountKey
+        - key: azureStorageAccountName
+          objectName: azureStorageAccountName
+      secretName: tcx-devopssample-secrets
+      type: Opaque
+jobs:
+  - name: print-job
+    type: PostSync
+    parallelism: 1
+    ttlSecondsAfterFinished: 100
+    restartPolicy: Never
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 250m
+      limits:
+        memory: 512Mi
+        cpu: 500m
+    image:
+      repo: alpine/curl
+      tag: latest
+      command: echo $.status.sync.revision
