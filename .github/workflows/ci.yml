@@ -27,7 +27,7 @@ jobs:
         uses: renovatebot/github-action@v40.1.6
         with:
           configurationFile: renovate.config.js
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TOKEN }}
         env:
           OCI_REGISTRY_USERNAME: ${{ secrets.OCI_REGISTRY_USERNAME }}
           OCI_REGISTRY_PASSWORD: ${{ secrets.OCI_REGISTRY_PASSWORD }}
