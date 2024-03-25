@@ -25,6 +25,11 @@ jobs:
           mv renovate_tmp.json renovate.json
           cat renovate.json
       - name: Run Renovate
+        env:
+          OCI_REGISTRY_USERNAME: ${{ secrets.OCI_REGISTRY_USERNAME }}
+          OCI_REGISTRY_PASSWORD: ${{ secrets.OCI_REGISTRY_PASSWORD }}
+        run: npx renovate
+      - name: Run Renovate
         uses: renovatebot/github-action@v40.1.6
         with:
           configurationFile: renovate.config.js
