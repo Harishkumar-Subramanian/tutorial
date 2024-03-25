@@ -20,6 +20,7 @@ jobs:
           node-version: '16'
       - name: Replace secrets in Renovate configuration
         run: |
+          ls -al
           sed -i "s#{{ secrets.OCI_REGISTRY_PASSWORD }}#${{ secrets.OCI_REGISTRY_PASSWORD }}#g" renovate.json
           cat renovate.json
       - name: Run Renovate
