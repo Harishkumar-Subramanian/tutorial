@@ -5,7 +5,7 @@
     {
       "hostType": "azure",
       "matchHost": "https://trimbletransportationcloud.azurecr.io",
-      "username": "{{ secrets.OCI_REGISTRY_USERNAME }}",
+      "username": "global-pull-token",
       "password": "{{ secrets.OCI_REGISTRY_PASSWORD }}"
     }
   ],
