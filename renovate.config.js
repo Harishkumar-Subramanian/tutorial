@@ -14,11 +14,12 @@ module.exports = {
       enabled: true
     }
   ],
-  regexManagers: [
-    {
-      fileMatch: ['^apps/.*/.*/values\\.yaml$'],
-      matchStrings: ['^helm:\\n\\s*targetRevision: (?<currentValue>.*)$'],
-      datasourceTemplate: 'helm',
-    },
+   customManagers: [
+     {
+       customType: 'regex',
+       fileMatch: ['^apps/.*/.*/values\\.yaml$'],
+       matchStrings: ['^helm:\\n\\s*targetRevision: (?<currentValue>.*)$'],
+       datasourceTemplate: 'helm',
+      }
   ],
 };
