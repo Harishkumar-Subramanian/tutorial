@@ -23,7 +23,7 @@ jobs:
           ls -al
           sed -i "s#{{ secrets.OCI_REGISTRY_PASSWORD }}#${{ secrets.OCI_REGISTRY_PASSWORD }}#g" renovate.json
 
-          grep '{{ secrets.OCI_REGISTRY_PASSWORD }}' renovate.json
+           cat renovate.json | grep '{{ secrets.OCI_REGISTRY_PASSWORD }}'
       - name: Run Renovate
         uses: renovatebot/github-action@v40.1.6
         with:
