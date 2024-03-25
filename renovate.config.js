@@ -22,4 +22,5 @@ module.exports = {
        datasourceTemplate: 'helm',
       }
   ],
+  repositories: ['helm/ttc-standard-app'],
 };
