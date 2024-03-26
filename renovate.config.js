@@ -23,4 +23,5 @@ module.exports = {
       }
   ],
   repositories: ['Harishkumar-Subramanian/tutorial'],
+  token: process.env.TOKEN,
 };

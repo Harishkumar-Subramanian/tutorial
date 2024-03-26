@@ -29,5 +29,6 @@ jobs:
           configurationFile: renovate.config.js
           token: ${{ secrets.TOKEN }}
         env:
+          TOKEN: ${{ secrets.TOKEN }}
           OCI_REGISTRY_USERNAME: ${{ secrets.OCI_REGISTRY_USERNAME }}
           OCI_REGISTRY_PASSWORD: ${{ secrets.OCI_REGISTRY_PASSWORD }}
